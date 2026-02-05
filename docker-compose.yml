@@ -1,0 +1,4 @@
+services: 
+  mono-framework-docker:
+    image: diyagi/mono-framework-docker:latest
+    build: .
