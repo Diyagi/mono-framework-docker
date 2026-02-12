@@ -2,9 +2,6 @@ name: Release
 
 on:
   workflow_dispatch:
-  
-env:
-  REGISTRY_IMAGE: diyagi/mono-framework-docker
 
 jobs:
   get-vars:
@@ -69,7 +66,9 @@ jobs:
         with:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          tags: ${{ env.REGISTRY_IMAGE }}
+          tags: |
+            docker.io/${{ github.repository }}
+            ghcr.io/${{ github.repository }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
       
       - name: Export digest
