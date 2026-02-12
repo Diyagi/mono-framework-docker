@@ -4,7 +4,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Builds the Dockerfile and pushes it to dockerhub and GHCR
+  build:
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+  
   release:
     name: Release - Docker image
     runs-on: ubuntu-latest
@@ -51,6 +56,6 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v6
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/${{ matrix.arch }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
