@@ -3,6 +3,9 @@ name: Release
 on:
   workflow_dispatch:
 
+env:
+  REGISTRY_IMAGE: user/app
+
 jobs:
   get-vars:
     runs-on: ubuntu-latest
@@ -67,7 +70,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           tags: |
-            docker.io/${{ github.repository }}
+            ${{ env.REGISTRY_IMAGE }}
             ghcr.io/${{ github.repository }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
       
