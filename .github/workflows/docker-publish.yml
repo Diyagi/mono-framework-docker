@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY_IMAGE: user/app
+  REGISTRY_IMAGE: diyagi/mono-framework-docker
 
 jobs:
   get-vars:
@@ -71,7 +71,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           tags: |
             ${{ env.REGISTRY_IMAGE }}
-            ghcr.io/${{ github.repository }}
+            ghcr.io/${{ env.REGISTRY_IMAGE }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
       
       - name: Export digest
